@@ -8,12 +8,3 @@ exports.getAllInvestments = async (req, res) => {
     res.status(500).json({ message: "Error retrieving investments", error });
   }
 };
-
-exports.addInvestment = async (req, res) => {
-  try {
-    const newInvestment = await investService.addInvestment(req.body);
-    res.status(201).json(newInvestment);
-  } catch (error) {
-    res.status(500).json({ message: "Error adding investment", error });
-  }
-};
