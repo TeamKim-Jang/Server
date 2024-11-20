@@ -3,8 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const investmainRoutes = require("./src/routes/investmainRoutes.js");
-
+const portfolioRoutes = require("./src/routes/portfolioRoutes.js");
+const portfolioStockRoutes = require("./src/routes/portfolioStockRoutes.js");
 var app = express();
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/investmain", investmainRoutes);
+app.use("/api/invest/main/balance", portfolioRoutes);
+app.use("/api/invest/main/stock", portfolioStockRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
