@@ -1,4 +1,4 @@
-name: Node.js CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     - name: Change directory
       run: cd solmoi-express
 
-    - name: Use Node.js
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: '23.x'
@@ -26,3 +26,21 @@ jobs:
         docker build --platform linux/amd64 -t solmoi-express .
         docker tag solmoi-express kimdongjae/gifted_dirac:${{ github.sha }}
         docker push kimdongjae/gifted_dirac:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: build
+
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USERNAME }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        script: |
+          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+          docker pull kimdongjae/gifted_dirac:${{ github.sha }}
+          docker stop solmoi-container || true
+          docker rm solmoi-container || true
+          docker run -d -p 3000:3000 --name solmoi-container kimdongjae/gifted_dirac:${{ github.sha }}
