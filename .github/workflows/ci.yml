@@ -43,4 +43,4 @@ jobs:
           docker pull kimdongjae/gifted_dirac:${{ github.sha }}
           docker stop solmoi-container || true
           docker rm solmoi-container || true
-          docker run -d -p 3000:3000 --name solmoi-container kimdongjae/gifted_dirac:${{ github.sha }}
+          docker run -d -p 3001:3000 --name solmoi-container kimdongjae/gifted_dirac:${{ github.sha }}
