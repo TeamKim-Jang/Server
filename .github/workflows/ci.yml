@@ -22,12 +22,24 @@ jobs:
         docker build --platform linux/amd64 -t solmoi-express ./solmoi-express
         docker tag solmoi-express kimdongjae/gifted_dirac:${{ github.sha }}
         docker push kimdongjae/gifted_dirac:${{ github.sha }}
-        
+
   deploy:
     runs-on: ubuntu-20.04
     needs: build
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create .env file
+      run: |
+        echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" > .env
+        echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+        echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+        echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+        echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+        echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.5
       with:
@@ -35,14 +47,6 @@ jobs:
         username: ${{ secrets.AWS_USERNAME }}
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
-          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
-          docker pull kimdongjae/gifted_dirac:${{ github.sha }}
-          docker stop solmoi-container || true
-          docker rm solmoi-container || true
-          docker run -d -p 3001:3000 --name solmoi-container \
-            -e MYSQL_HOST=${{ secrets.MYSQL_HOST }} \
-            -e MYSQL_PORT=${{ secrets.MYSQL_PORT }} \
-            -e MYSQL_USER=${{ secrets.MYSQL_USER }} \
-            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-            -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-            kimdongjae/gifted_dirac:${{ github.sha }}
+          cd /path/to/your/repository
+          docker-compose down -v || true
+          docker-compose up -d --build

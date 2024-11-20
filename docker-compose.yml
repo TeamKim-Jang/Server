@@ -8,11 +8,11 @@ services:
     ports:
       - "3001:3000"
     environment:
-      - MYSQL_HOST=${{ secrets.MYSQL_HOST }}
-      - MYSQL_PORT=${{ secrets.MYSQL_PORT }}
-      - MYSQL_USER=${{ secrets.MYSQL_USER }}
-      - MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-      - MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     depends_on:
       - db
 
@@ -21,10 +21,10 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
