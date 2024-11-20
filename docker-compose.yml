@@ -7,8 +7,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3000"
-    env_file:
-      - ./solmoi-express/.env
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     depends_on:
       - db
 
@@ -16,8 +20,11 @@ services:
     image: mysql:8.0
     container_name: mysql-db
     restart: always
-    env_file:
-      - ./solmoi-express/.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:

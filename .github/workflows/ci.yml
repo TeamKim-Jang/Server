@@ -11,17 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Change directory
-      run: cd solmoi-express
-
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '23.x'
 
     - name: Docker build and push
       run: |
-        cd solmoi-express
         docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
         docker build --platform linux/amd64 -t solmoi-express .
         docker tag solmoi-express kimdongjae/gifted_dirac:${{ github.sha }}
@@ -43,4 +39,10 @@ jobs:
           docker pull kimdongjae/gifted_dirac:${{ github.sha }}
           docker stop solmoi-container || true
           docker rm solmoi-container || true
-          docker run -d -p 3001:3000 --name solmoi-container kimdongjae/gifted_dirac:${{ github.sha }}
+          docker run -d -p 3001:3000 --name solmoi-container \
+            -e MYSQL_HOST=${{ secrets.MYSQL_HOST }} \
+            -e MYSQL_PORT=${{ secrets.MYSQL_PORT }} \
+            -e MYSQL_USER=${{ secrets.MYSQL_USER }} \
+            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+            -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
+            kimdongjae/gifted_dirac:${{ github.sha }}
