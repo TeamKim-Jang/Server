@@ -19,10 +19,10 @@ jobs:
     - name: Docker build and push
       run: |
         docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
-        docker build --platform linux/amd64 -t solmoi-express .
+        docker build --platform linux/amd64 -t solmoi-express ./solmoi-express
         docker tag solmoi-express kimdongjae/gifted_dirac:${{ github.sha }}
         docker push kimdongjae/gifted_dirac:${{ github.sha }}
-
+        
   deploy:
     runs-on: ubuntu-20.04
     needs: build
