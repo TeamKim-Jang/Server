@@ -47,6 +47,6 @@ jobs:
         username: ${{ secrets.AWS_USERNAME }}
         key: ${{ secrets.AWS_SSH_KEY }}
         script: |
-          cd /path/to/your/repository
+          cd /home/ubuntu/Server
           docker-compose down -v || true
           docker-compose up -d --build
