@@ -38,6 +38,7 @@ jobs:
 
     - name: Add EC2 host key
       run: |
+        mkdir -p ~/.ssh
         ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: Create .env file on EC2
