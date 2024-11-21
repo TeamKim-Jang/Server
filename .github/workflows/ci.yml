@@ -36,6 +36,7 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" | sed 's/\r$//' > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
+        cat ~/.ssh/***-key.pem | head -n 10
         ls -la ~/.ssh
         ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
         cat ~/.ssh/known_hosts
