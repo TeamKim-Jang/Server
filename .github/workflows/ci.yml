@@ -33,12 +33,12 @@ jobs:
 
     - name: Setup SSH key from GitHub Secrets
       run: |
-        echo "${{ secrets.AWS_SSH_KEY }}" > solmoi-key.pem
-        chmod 600 solmoi-key.pem
+        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/solmoi-key.pem
+        chmod 600 ~/.ssh/solmoi-key.pem
 
     - name: Create .env file on EC2
       run: |
-        ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "cat <<EOT > /home/ubuntu/Server/.env
+        ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "cat <<EOT > /home/ubuntu/Server/.env
         MYSQL_HOST=${{ secrets.MYSQL_HOST }}
         MYSQL_PORT=${{ secrets.MYSQL_PORT }}
         MYSQL_USER=${{ secrets.MYSQL_USER }}
