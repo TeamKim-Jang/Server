@@ -52,6 +52,10 @@ jobs:
         MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
         EOT"
 
+    - name: Copy repository to EC2
+      run: |
+        scp -i solmoi-key.pem -r ./ ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server
+
     - name: Deploy to EC2
       run: |
         ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
@@ -59,11 +63,3 @@ jobs:
         docker-compose down -v || true &&
         docker-compose up -d --build
         "
-
-    - name: Check Docker Compose configuration
-      run: |
-          ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
-          cd /home/ubuntu/Server &&
-          docker-compose config
-          "
-      
