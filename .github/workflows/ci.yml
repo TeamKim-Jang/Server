@@ -31,12 +31,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup SSH key
+    - name: Debug SSH Setup
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" | sed 's/\r$//' > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
+        ls -la ~/.ssh
         ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+        cat ~/.ssh/known_hosts
+        ssh -v -i ~/.ssh/solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "echo Connection successful"
 
     - name: Deploy to EC2
       run: |
