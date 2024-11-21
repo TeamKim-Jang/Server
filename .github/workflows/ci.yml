@@ -36,16 +36,9 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" | sed 's/\r$//' > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
-        cat ~/.ssh/***-key.pem | head -n 10
-        echo "Hello"
         ls -la ~/.ssh
-        echo "World"
         ssh-keyscan -H ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
-        echo "22"
-        cat ~/.ssh/known_hosts
-        echo "33"
         ssh -v -i ~/.ssh/solmoi-key.pem ubuntu@ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com "echo Connection successful"
-        echo "44"
 
     - name: Deploy to EC2
       run: |
