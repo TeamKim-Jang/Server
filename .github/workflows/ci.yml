@@ -33,8 +33,10 @@ jobs:
 
     - name: Setup SSH key
       run: |
-        echo "${{ secrets.AWS_SSH_KEY }}" > solmoi-key.pem
-        chmod 600 solmoi-key.pem
+        mkdir -p ~/.ssh
+        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/solmoi-key.pem
+        chmod 600 ~/.ssh/solmoi-key.pem
+        ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com > ~/.ssh/known_hosts
 
     - name: Add EC2 host key
       run: |
