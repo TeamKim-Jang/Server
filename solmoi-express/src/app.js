@@ -70,5 +70,5 @@ const dbConnect = async (retries = 5, delay = 5000) => {
   });
 
   // 서버 실행
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, () => console.log(`Server running on port ${PORT || 3001}`));
 })();
