@@ -33,10 +33,10 @@ jobs:
 
     - name: Setup SSH key
       run: |
-        mkdir -p ~/.ssh # SSH 디렉토리 생성
-        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/solmoi-key.pem # 키 저장
-        chmod 600 ~/.ssh/solmoi-key.pem # 적절한 권한 설정
-        ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts # known_hosts 업데이트
+        mkdir -p /home/runner/.ssh
+        echo "${{ secrets.AWS_SSH_KEY }}" > /home/runner/.ssh/solmoi-key.pem
+        chmod 600 /home/runner/.ssh/solmoi-key.pem
+        ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> /home/runner/.ssh/known_hosts
 
     - name: Test SSH connection
       run: |
