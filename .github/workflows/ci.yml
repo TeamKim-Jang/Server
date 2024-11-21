@@ -36,16 +36,11 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
-        ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com > ~/.ssh/known_hosts
-
-    - name: Add EC2 host key
-      run: |
-        mkdir -p ~/.ssh
         ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: Create .env file on EC2
       run: |
-        ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "cat <<EOT > /home/ubuntu/Server/.env
+        ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "cat <<EOT > /home/ubuntu/Server/.env
         MYSQL_HOST=${{ secrets.MYSQL_HOST }}
         MYSQL_PORT=${{ secrets.MYSQL_PORT }}
         MYSQL_USER=${{ secrets.MYSQL_USER }}
@@ -56,11 +51,11 @@ jobs:
 
     - name: Copy repository to EC2
       run: |
-        scp -i ***-key.pem -r * ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server
+        scp -i ~/.ssh/solmoi-key.pem -r ./solmoi-express/* ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server/solmoi-express
 
     - name: Deploy to EC2
       run: |
-        ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
+        ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
         cd /home/ubuntu/Server &&
         docker-compose down -v || true &&
         docker-compose up -d --build
