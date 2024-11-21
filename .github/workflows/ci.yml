@@ -33,7 +33,7 @@ jobs:
 
     - name: Create .env file
       run: |
-        echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" > .env
+        echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
         echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
         echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
         echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
