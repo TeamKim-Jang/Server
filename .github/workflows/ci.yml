@@ -54,7 +54,7 @@ jobs:
 
     - name: Copy repository to EC2
       run: |
-        scp -i solmoi-key.pem -r ./ ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server
+        scp -i ***-key.pem -r * ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server
 
     - name: Deploy to EC2
       run: |
