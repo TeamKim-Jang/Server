@@ -6,8 +6,9 @@ dotenv.config();
 
 const app = express();
 
+const PORT = process.env.PORT || 3001;
+
 const {
-  PORT,
   MYSQL_PORT,
   MYSQL_USER,
   MYSQL_PASSWORD,
@@ -15,7 +16,7 @@ const {
 } = process.env;
 
 const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
-  host: 'db', // Docker Compose의 MySQL 서비스 이름
+  host: 'db',
   port: MYSQL_PORT || 3306,
   dialect: 'mysql',
 });
@@ -26,7 +27,7 @@ const dbConnect = async (retries = 5, delay = 5000) => {
     try {
       await sequelize.authenticate();
       console.log('DB 연결 성공');
-      break; // 연결 성공 시 반복문 종료
+      break;
     } catch (error) {
       console.error(`DB 연결 실패. 재시도 횟수: ${retries}`);
       console.error(error.message);
@@ -70,5 +71,5 @@ const dbConnect = async (retries = 5, delay = 5000) => {
   });
 
   // 서버 실행
-  app.listen(PORT, () => console.log(`Server running on port ${PORT || 3001}`));
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })();
