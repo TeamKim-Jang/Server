@@ -31,10 +31,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup SSH key from GitHub Secrets
+    - name: Setup SSH key
       run: |
+        mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
+        ssh-keyscan -H ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com > ~/.ssh/known_hosts
 
     - name: Create .env file on EC2
       run: |
@@ -49,11 +51,11 @@ jobs:
 
     - name: Copy repository to EC2
       run: |
-        scp -i solmoi-key.pem -r ./solmoi-express/* ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server/solmoi-express
+        scp -i ~/.ssh/solmoi-key.pem -r * ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/Server
 
     - name: Deploy to EC2
       run: |
-        ssh -i solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
+        ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-43-201-6-241.ap-northeast-2.compute.amazonaws.com "
         cd /home/ubuntu/Server &&
         docker-compose down -v || true &&
         docker-compose up -d --build
