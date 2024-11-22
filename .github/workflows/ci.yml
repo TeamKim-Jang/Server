@@ -36,26 +36,20 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.AWS_SSH_KEY }}" | sed 's/\r$//' > ~/.ssh/solmoi-key.pem
         chmod 600 ~/.ssh/solmoi-key.pem
-        ls -la ~/.ssh
         ssh-keyscan -H ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
-        ssh -v -i ~/.ssh/solmoi-key.pem ubuntu@ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com "echo Connection successful"
 
     - name: Deploy to EC2
       run: |
         ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com "
         cd /home/ubuntu/Server &&
-        MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-        MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-        MYSQL_USER=${{ secrets.MYSQL_USER }} \
-        MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-        MYSQL_HOST=db \
-        MYSQL_PORT=3306 \
+        echo \"MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}\" > .env &&
+        echo \"MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}\" >> .env &&
+        echo \"MYSQL_USER=${{ secrets.MYSQL_USER }}\" >> .env &&
+        echo \"MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}\" >> .env &&
+        echo \"MYSQL_HOST=db\" >> .env &&
+        echo \"MYSQL_PORT=3306\" >> .env &&
+        chmod 600 .env &&
         docker-compose down -v || true &&
-        MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-        MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-        MYSQL_USER=${{ secrets.MYSQL_USER }} \
-        MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-        MYSQL_HOST=db \
-        MYSQL_PORT=3306 \
-        docker-compose up -d --build
+        docker-compose pull &&
+        docker-compose up -d
         "
