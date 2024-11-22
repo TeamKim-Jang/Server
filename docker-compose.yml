@@ -3,6 +3,7 @@ version: '3.8'
 services:
   app:
     image: kimdongjae/gifted_dirac:latest
+    platform: linux/amd64
     ports:
       - "3001:3000"
     env_file:
