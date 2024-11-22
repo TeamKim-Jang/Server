@@ -21,12 +21,12 @@ jobs:
   
     - name: Docker build and push
       run: |
-          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
-          docker buildx build \
-            --platform linux/amd64 \
-            -t kimdongjae/gifted_dirac:${{ github.sha }} \
-            ./solmoi-express \
-            --push
+        docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+        docker buildx build \
+          --platform linux/amd64 \
+          -t kimdongjae/gifted_dirac:${{ github.sha }} \
+          ./solmoi-express \
+          --push
 
   deploy:
     runs-on: ubuntu-20.04
