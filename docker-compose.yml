@@ -16,6 +16,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    tty: true
+    stdin_open: true
 
   db:
     image: mysql:8.0
