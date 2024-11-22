@@ -31,5 +31,8 @@ const Portfolio = sequelize.define(
     timestamps: false,
   }
 );
+Portfolio.afterUpdate((portfolio) => {
+  broadcastUpdate("PORTFOLIO_UPDATE", portfolio);
+});
 
 module.exports = Portfolio;

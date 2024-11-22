@@ -1,7 +1,8 @@
+// src/models/portfoliostockModel.js
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db.js");
 
-// Define the Portfolio model
+// Define the PortfolioStock model
 const portfolioStock = sequelize.define(
   "portfolioStock",
   {
@@ -13,7 +14,6 @@ const portfolioStock = sequelize.define(
     user_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      primaryKey: false,
     },
     stock_id: {
       type: DataTypes.DECIMAL(20, 2),
@@ -22,9 +22,12 @@ const portfolioStock = sequelize.define(
     },
   },
   {
-    tableName: "portfolio_stock",
+    tableName: "portfoliostock",
     timestamps: false,
   }
 );
+portfolioStock.afterUpdate((portfolioStock) => {
+  broadcastUpdate("PORTFOLIO_STOCK_UPDATE", portfolioStock);
+});
 
 module.exports = portfolioStock;
