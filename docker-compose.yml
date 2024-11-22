@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: kimdongjae/gifted_dirac:${GITHUB_SHA}
+    image: kimdongjae/gifted_dirac:latest
     ports:
       - "3001:3000"
     env_file:

@@ -41,6 +41,7 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -i ~/.ssh/solmoi-key.pem ubuntu@ec2-13-209-16-83.ap-northeast-2.compute.amazonaws.com "
+        export GITHUB_SHA=${{ github.sha }} &&
         cd /home/ubuntu/Server &&
         echo \"MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}\" > .env &&
         echo \"MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}\" >> .env &&
