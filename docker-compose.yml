@@ -2,17 +2,11 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: ./solmoi-express
-      dockerfile: Dockerfile
+    image: kimdongjae/gifted_dirac:${GITHUB_SHA}
     ports:
       - "3001:3000"
-    environment:
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -22,11 +16,8 @@ services:
     image: mysql:8.0
     container_name: mysql-db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     volumes:
