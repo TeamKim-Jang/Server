@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   app:
+    image: kimdongjae/gifted_dirac:${GITHUB_SHA}
     build:
       context: ./solmoi-express
       dockerfile: Dockerfile
