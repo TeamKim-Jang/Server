@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var { app, server } = require("../app");
+var app = require("../app");
 var debug = require("debug")("solmoi-express:server");
 var http = require("http");
 
@@ -13,9 +13,7 @@ var http = require("http");
  */
 
 const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+
 app.set("port", port);
 
 /**

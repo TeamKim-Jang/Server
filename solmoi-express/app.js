@@ -1,6 +1,5 @@
 const express = require("express");
 const http = require("http");
-const WebSocket = require("ws");
 const createError = require("http-errors");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -9,7 +8,6 @@ const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 
 app.use(cors());
 app.use(logger("dev"));
@@ -17,27 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-// WebSocket connection
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-});
-
-// Function to broadcast updates to all connected clients
-function broadcastUpdate(type, data) {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ type, data }));
-    }
-  });
-}
-
-// Export broadcastUpdate function to be used in models
-module.exports.broadcastUpdate = broadcastUpdate;
 
 // API routes (import from separate route files)
 const portfolioRoutes = require("./src/routes/portfolioRoutes");
@@ -59,4 +36,6 @@ app.use(function (err, req, res, next) {
   res.json({ error: err.message });
 });
 
-module.exports = { app, server };
+console.log("Server initialized without WebSocket functionality.");
+
+module.exports = app;

@@ -33,8 +33,5 @@ const Stock = sequelize.define(
     timestamps: false,
   }
 );
-Stock.afterUpdate((stock) => {
-  broadcastUpdate("STOCK_UPDATE", stock);
-});
 
 module.exports = Stock;

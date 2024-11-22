@@ -26,8 +26,5 @@ const portfolioStock = sequelize.define(
     timestamps: false,
   }
 );
-portfolioStock.afterUpdate((portfolioStock) => {
-  broadcastUpdate("PORTFOLIO_STOCK_UPDATE", portfolioStock);
-});
 
 module.exports = portfolioStock;
