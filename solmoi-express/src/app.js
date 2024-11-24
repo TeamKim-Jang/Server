@@ -40,15 +40,15 @@ const dbConnect = async (retries = 5, delay = 5000) => {
       console.log('DB 연결 성공');
       break;
     } catch (error) {
-      console.error(`DB 연결 실패. 재시도 횟수: ${retries}`);
-      console.error(error.message);
+      console.error('DB 연결 실패:', error);
+      console.error(`재시도 횟수: ${retries}`);
       retries -= 1;
       if (!retries) {
-        console.error('최대 재시도 횟수 초과. 애플리케이션 종료.');
-        process.exit(1); // 재시도 실패 시 프로세스 종료
+        console.error('최대 재시도 횟수 초과. 애플리케이션은 계속 실행됩니다.');
+        break;
       }
       console.log(`${delay / 1000}초 후 재시도...`);
-      await new Promise((resolve) => setTimeout(resolve, delay)); // 딜레이
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
 };
