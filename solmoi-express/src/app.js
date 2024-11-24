@@ -18,10 +18,18 @@ const {
   MYSQL_DATABASE,
 } = process.env;
 
+console.log({
+  MYSQL_PORT,
+  MYSQL_USER,
+  MYSQL_PASSWORD,
+  MYSQL_DATABASE,
+});
+
 const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   host: 'db',
   port: MYSQL_PORT || 3306,
   dialect: 'mysql',
+  logging: console.log,
 });
 
 // DB 연결 함수 (재시도 로직 포함)
