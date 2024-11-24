@@ -3,8 +3,8 @@ import rankingController from '../controllers/rankingController.js';
 
 const router = express.Router();
 
-router.get('/rankings/overall', rankingController.getOverallRanking);
-router.get('/rankings/school/:schoolId', rankingController.getSchoolRanking);
-router.get('/rankings/schoolRank', rankingController.getSchoolAverageRanking);
+router.get('/overall', rankingController.getOverallRanking);
+router.get('/school/:schoolId', rankingController.getSchoolRanking);
+router.get('/schoolRank', rankingController.getSchoolAverageRanking);
 
 export default router;

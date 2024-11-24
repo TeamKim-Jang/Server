@@ -18,7 +18,7 @@ const initializeDB = async () => {
     console.log('DB 연결 성공');
 
     await sequelize.sync({ force: false });
-    console.log('모델 동기화완료');
+    console.log('모델 동기화 완료');
   } catch (error) {
     console.error('DB 초기화 실패:', error.message);
     process.exit(1);

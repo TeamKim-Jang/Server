@@ -9,8 +9,4 @@ Portfolio.belongsTo(User, { foreignKey: 'user_id' });
 School.hasMany(User, { foreignKey: 'school_id' });
 User.belongsTo(School, { foreignKey: 'school_id' });
 
-User.hasOne(Ranking, { foreignKey: 'user_id' });
-Ranking.belongsTo(User, { foreignKey: 'user_id' });
-
 export { User, Portfolio, School, Ranking };
-
