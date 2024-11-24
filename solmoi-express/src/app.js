@@ -79,7 +79,7 @@ const dbConnect = async (retries = 5, delay = 5000) => {
 
   await TestModel.sync({ force: true }); // 테스트 테이블 초기화
   console.log('테스트 테이블 생성');
-
+});
   // 테스트용 엔드포인트
   app.get('/', async (req, res) => {
     const newData = await TestModel.create({ name: 'Sequelize Test' });
@@ -94,4 +94,3 @@ const dbConnect = async (retries = 5, delay = 5000) => {
 
   // 서버 실행
 app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT || 3001}`));
-})
