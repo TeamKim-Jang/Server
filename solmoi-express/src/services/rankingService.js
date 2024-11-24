@@ -17,6 +17,24 @@ class RankingService {
         throw new Error('Failed to fetch overall rankings');
       }
     }
+
+    //학교별
+    async getSchoolRanking(schoolId) {
+        try {
+          const rankings = await Ranking.findAll({
+            include: {
+              model: User,
+              where: { school_id: schoolId },
+              attributes: ['nickname'],
+            },
+            order: [['total_profit_loss', 'DESC']],
+            limit: 100,
+          });
+          return rankings;
+        } catch (error) {
+          throw new Error('Failed to fetch school rankings');
+        }
+      }
   }
   
   export default new RankingService();
