@@ -53,6 +53,17 @@ const dbConnect = async (retries = 5, delay = 5000) => {
   }
 };
 
+// Sequelize 연결 테스트
+(async () => {
+  try {
+    const [results] = await sequelize.query('SELECT 1 + 1 AS solution');
+    console.log('쿼리 결과:', results);
+  } catch (err) {
+    console.error('쿼리 실패:', err.message);
+  }
+})();
+
+
 // 서버 초기화
 (async () => {
   // DB 연결 시도
