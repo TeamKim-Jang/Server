@@ -24,6 +24,17 @@ class RankingController {
           res.status(500).json({ error: error.message });
         }
       }
+      
+    //소속학교 랭킹
+    async getSchoolAverageRanking(req, res) {
+        try {
+          const schoolRankings = await rankingService.getSchoolAverageRanking();
+          res.status(200).json({ data: schoolRankings });
+        } catch (error) {
+          console.error('Error fetching school average rankings:', error.message);
+          res.status(500).json({ error: error.message });
+        }
+    }
 
   }
   

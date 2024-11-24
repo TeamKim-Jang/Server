@@ -34,6 +34,28 @@ class RankingService {
         } catch (error) {
           throw new Error('Failed to fetch school rankings');
         }
+    }
+
+    //소속학교 순위
+    async getSchoolAverageRanking() {
+        try {
+          const schoolRankings = await Ranking.findAll({
+            attributes: [
+              'school_id',
+              [Sequelize.fn('AVG', Sequelize.col('total_profit_loss')), 'average_profit_loss'],
+            ],
+            include: {
+              model: School,
+              attributes: ['school_name'], // 학교이름
+            },
+            group: ['school_id'],
+            order: [[Sequelize.literal('average_profit_loss'), 'DESC']],
+          });
+    
+          return schoolRankings;
+        } catch (error) {
+          throw new Error('Failed to fetch school average rankings');
+        }
       }
   }
   
