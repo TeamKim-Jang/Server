@@ -3,7 +3,7 @@ import sequelize from '../config/db.js';
 
 const School = sequelize.define('School', {
   school_id: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
@@ -11,6 +11,8 @@ const School = sequelize.define('School', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  tableName: 'School',
 });
 
 export default School;
