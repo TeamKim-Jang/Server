@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/overall', rankingController.getOverallRanking);
 router.get('/school/:schoolId', rankingController.getSchoolRanking);
-router.get('/schoolRank', rankingController.getSchoolAverageRanking);
+router.get('/schoolrank/:schoolId', rankingController.getSchoolAverageRanking);
 
 export default router;

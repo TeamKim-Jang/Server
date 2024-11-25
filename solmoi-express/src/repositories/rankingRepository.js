@@ -4,16 +4,18 @@ import School from '../models/School.js';
 import Sequelize from 'sequelize';
 
 class RankingRepository {
-  async fetchOverallRankings() {
-    return Ranking.findAll({
-      include: {
-        model: User,
-        attributes: ['nickname', 'school_id'],
-      },
-      order: [['total_profit_loss', 'DESC']],
-      limit: 100,
-    });
-  }
+    async fetchOverallRankings() {
+        return Ranking.findAll({
+          include: [
+            {
+              model: User, 
+              attributes: ['nickname', 'school_id'], 
+            },
+          ],
+          order: [['total_profit_loss', 'DESC']],
+          limit: 100,
+        });
+      }
 
   async fetchSchoolRankings(schoolId) {
     return Ranking.findAll({

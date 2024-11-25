@@ -11,6 +11,11 @@ const School = sequelize.define('School', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  average_profit_loss: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+    defaultValue: null,
+  }
 }, {
   tableName: 'School',
 });

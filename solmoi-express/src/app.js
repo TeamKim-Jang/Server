@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './config/db.js';
 import rankingRoutes from './routes/rankingRoutes.js';
+import { User, Portfolio, School, Ranking } from './models/index.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const initializeDB = async () => {
     console.log('DB 연결 성공');
 
     await sequelize.sync({ force: false });
-    console.log('모델 동기화 완료');
+    console.log('모델 동기화완료');
   } catch (error) {
     console.error('DB 초기화 실패:', error.message);
     process.exit(1);

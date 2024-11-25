@@ -7,7 +7,7 @@ const Portfolio = sequelize.define('Portfolio', {
     primaryKey: true,
     allowNull: false,
     references: {
-      model: 'User', 
+      model: 'User',
       key: 'user_id',
     },
   },
