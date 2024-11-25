@@ -1,6 +1,6 @@
   import express from 'express';
   import axios from 'axios';
-  import db from '../db.js'; // DB 연결
+  import db from '../config/db.js'; // DB 연결
   import cron from 'node-cron';
 
   const router = express.Router();
