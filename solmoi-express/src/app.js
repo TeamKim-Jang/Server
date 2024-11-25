@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors'; // CORS 모듈 가져오기
 import authRoutes from './routes/authRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js'
 import sequelize from './config/databases.js';
 
 const app = express();
@@ -21,6 +22,7 @@ sequelize.sync()
 
 // 라우터 등록
 app.use('/auth', authRoutes);
+app.use('/attendance', attendanceRoutes);
 
 // 서버 실행
 const PORT = process.env.PORT || 3000;
