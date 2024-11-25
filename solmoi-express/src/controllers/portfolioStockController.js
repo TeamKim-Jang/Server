@@ -1,4 +1,4 @@
-const PortfolioStockService = require("../services/PortfolioStockService.js");
+const PortfolioStockService = require("../services/portfolioStockService.js");
 
 const PortfolioStockController = {
   getUserPortfolioStock: async (req, res) => {

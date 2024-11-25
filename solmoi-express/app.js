@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // API routes (import from separate route files)
 const portfolioRoutes = require("./src/routes/portfolioRoutes");
 const portfolioStockRoutes = require("./src/routes/portfolioStockRoutes");
+const predictionRoutes = require("./src/routes/predictionRoutes");
 
 app.use("/api/invest/main/balance", portfolioRoutes);
 app.use("/api/invest/main/portfoliostock", portfolioStockRoutes);
+app.use("/api/invest/updowngame", predictionRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,5 +1,5 @@
 const Stock = require("../models/stockModel.js");
-const portfolioStock = require("../models/portfoliostockModel.js");
+const portfolioStock = require("../models/portfolioStockModel.js");
 
 const { Op } = require("sequelize");
 
