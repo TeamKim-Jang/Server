@@ -1,33 +1,57 @@
 const Prediction = require("../models/predictionModel.js");
 const Stock = require("../models/stockModel.js");
+const User = require("../models/userModel.js");
+const { Op } = require("sequelize");
 
 const PredictionService = {
   createPrediction: async (predictionData) => {
     try {
-      // Validate user and stock existence
-      const user = await User.findByPk(predictionData.user_id);
+      // 사용자가 오늘 이미 예측을 했는지 확인
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const existingPrediction = await Prediction.findOne({
+        where: {
+          user_id: predictionData.user_id,
+          prediction_date: {
+            [Op.gte]: today,
+          },
+        },
+      });
+
+      if (existingPrediction) {
+        throw new Error("사용자가 오늘 이미 예측을 했습니다");
+      }
+
+      // 사용자와 주식 존재 여부 확인
+      const [user, stock] = await Promise.all([
+        User.findByPk(predictionData.user_id),
+        Stock.findByPk(predictionData.stock_id),
+      ]);
+
       if (!user) {
-        throw new Error("User not found");
+        throw new Error("사용자를 찾을 수 없습니다");
       }
 
-      const stock = await Stock.findByPk(predictionData.stock_id);
       if (!stock) {
-        throw new Error("Stock not found");
+        throw new Error("주식을 찾을 수 없습니다");
       }
 
-      // Create the prediction
+      // 예측 생성
       const newPrediction = await Prediction.create({
-        prediction_date: predictionData.prediction_date,
+        prediction_date: new Date(),
         prediction_upordown: predictionData.prediction_upordown,
-        is_correct: null, // This will be updated later when the prediction is verified
+        is_correct: null,
         user_id: predictionData.user_id,
         stock_id: predictionData.stock_id,
+        predictionstockID: stock.stock_id,
+        predictionStockValue: stock.current_price,
       });
 
       return newPrediction;
     } catch (error) {
-      console.error("Service error:", error);
-      throw new Error("Error creating prediction");
+      console.error("서비스 오류:", error);
+      throw error;
     }
   },
 
@@ -46,8 +70,8 @@ const PredictionService = {
 
       return userPredictions;
     } catch (error) {
-      console.error("Service error:", error);
-      throw new Error("Error fetching user predictions");
+      console.error("서비스 오류:", error);
+      throw new Error("사용자 예측을 가져오는 중 오류 발생");
     }
   },
 
@@ -63,7 +87,7 @@ const PredictionService = {
       });
 
       if (!prediction) {
-        throw new Error("Prediction not found");
+        throw new Error("예측을 찾을 수 없습니다");
       }
 
       const isCorrect =
@@ -76,10 +100,26 @@ const PredictionService = {
 
       return prediction;
     } catch (error) {
-      console.error("Service error:", error);
-      throw new Error("Error verifying prediction");
+      console.error("서비스 오류:", error);
+      throw new Error("예측 확인 중 오류 발생");
     }
   },
 };
 
 module.exports = PredictionService;
+
+// createPrediction 메서드 테스트
+const testCreatePrediction = async () => {
+  try {
+    const result = await PredictionService.createPrediction({
+      user_id: 1,
+      stock_id: 1,
+      prediction_upordown: "UP",
+    });
+    console.log("예측 생성됨:", result);
+  } catch (error) {
+    console.error("예측 생성 중 오류 발생:", error.message);
+  }
+};
+
+testCreatePrediction();

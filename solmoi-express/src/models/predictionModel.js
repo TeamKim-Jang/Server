@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db.js");
-const Stock = require("./stockModel.js"); // Import Stock model`// Define the Prediction model
+const Stock = require("./stockModel.js"); // Import Stock model
+
+// Define the Prediction model
 const Prediction = sequelize.define(
   "Prediction",
   {
@@ -37,6 +39,11 @@ const Prediction = sequelize.define(
         model: "stock", // References the stock table
         key: "stock_id",
       },
+    },
+
+    predictionStockValue: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
     },
   },
   {
