@@ -67,7 +67,11 @@ const authService = {
       const token = generateToken(user.id);
       console.log('Generated Token:', token);
 
-      return { token };
+      return {
+        token,
+        userName:user.user_name,
+        email:user.email,
+      };
     } catch (error) {
       console.error('Error in loginUser:', error.message);
       throw new Error('Login failed. Please try again later.');

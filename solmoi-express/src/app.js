@@ -11,6 +11,10 @@ app.use(cors({
     origin: "http://localhost:5173", // React 앱이 실행 중인 주소
     credentials: true, // 인증 정보(쿠키 등) 허용
 }));
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.url}`);
+  next();
+});
 
 // JSON 요청 처리
 app.use(express.json());
