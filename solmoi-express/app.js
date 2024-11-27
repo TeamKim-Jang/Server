@@ -23,7 +23,7 @@ const predictionRoutes = require("./src/routes/predictionRoutes");
 
 app.use("/api/invest/main/balance", portfolioRoutes);
 app.use("/api/invest/main/portfoliostock", portfolioStockRoutes);
-app.use("/api/invest/updowngame", predictionRoutes);
+app.use("/api/predict", predictionRoutes); // 새로운 예측 게임 라우트
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

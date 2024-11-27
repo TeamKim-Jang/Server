@@ -4,7 +4,7 @@ const sequelize = require("../../db.js");
 const User = sequelize.define(
   "User",
   {
-    user_id: {
+    id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,

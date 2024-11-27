@@ -29,7 +29,7 @@ const Prediction = sequelize.define(
       allowNull: false,
       references: {
         model: "users", // References the user table
-        key: "user_id",
+        key: "id",
       },
     },
     stock_id: {
@@ -40,8 +40,7 @@ const Prediction = sequelize.define(
         key: "stock_id",
       },
     },
-
-    predictionStockValue: {
+    prediction_stock_value: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
     },
