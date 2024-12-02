@@ -12,19 +12,28 @@ const NewsRead = sequelize.define(
     news_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
+      references: {
+        model: "News", 
+        key: "news_id",
+      },
     },
     user_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
+      references: {
+        model: "User", 
+        key: "user_id",
+      },
     },
+    
     read_date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
   },
   {
-    tableName: 'NewsRead', // 테이블 이름 대소문자 정확히 지정
-    timestamps: false, // createdAt, updatedAt 필드 비활성화
+    tableName: 'NewsRead', 
+    timestamps: false,
   }
 );
 

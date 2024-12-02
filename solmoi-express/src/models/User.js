@@ -2,12 +2,13 @@
   import sequelize from '../config/db.js';
 
   const User = sequelize.define(
-    'User', // 모델 이름
+    'User',
     {
       user_id: {
         type: DataTypes.BIGINT,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
       },
       user_name: {
         type: DataTypes.STRING(20),

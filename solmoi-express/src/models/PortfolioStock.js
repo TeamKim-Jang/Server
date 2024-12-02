@@ -1,10 +1,8 @@
-// src/models/portfoliostockModel.js
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 
-// Define the PortfolioStock model
-const portfolioStock = sequelize.define(
-  "portfolioStock",
+const PortfolioStock = sequelize.define(
+  "PortfolioStock",
   {
     portfoliostock_id: {
       type: DataTypes.BIGINT,
@@ -16,15 +14,19 @@ const portfolioStock = sequelize.define(
       allowNull: false,
     },
     stock_id: {
-      type: DataTypes.DECIMAL(20, 2),
+      type: DataTypes.BIGINT,
       allowNull: false,
-      defaultValue: 0.0,
+      references: {
+        model: "Stock",
+        key: "stock_id",
+      },
     },
+    
   },
   {
-    tableName: "portfoliostock",
+    tableName: "PortfolioStock",
     timestamps: false,
   }
 );
 
-export default portfolioStock;
+export default PortfolioStock;
