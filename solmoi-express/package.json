@@ -25,12 +25,8 @@
     "node-cron": "^3.0.3",
     "sequelize": "^6.37.5",
     "sharp": "^0.33.5",
-<<<<<<< HEAD
-    "systemctl": "^0.1.2"
-=======
     "mysql": "^2.18.1",
     "systemctl": "^0.2.2"
->>>>>>> a790a17cd44ee0e0978db1ee343924c6de5fb26f
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
