@@ -4,4 +4,4 @@ const router = express.Router();
 
 router.get("/:id", PortfolioController.getUserPortfolio);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../db.js");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 // Define the Stock model
 const Stock = sequelize.define(
@@ -34,4 +34,4 @@ const Stock = sequelize.define(
   }
 );
 
-module.exports = Stock;
+export default Stock;

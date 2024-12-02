@@ -1,6 +1,6 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../db.js");
-const Stock = require("./stockModel.js"); // Import Stock model
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
+import Stock from "./stockModel.js"; // Import Stock model
 
 // Define the Prediction model
 const Prediction = sequelize.define(
@@ -54,4 +54,4 @@ const Prediction = sequelize.define(
 // Define association with Stock model
 Prediction.belongsTo(Stock, { foreignKey: "stock_id" });
 
-module.exports = Prediction;
+export default Prediction;

@@ -1,13 +1,11 @@
-const Stock = require("../models/stockModel.js");
-const portfolioStock = require("../models/portfolioStockModel.js");
+import { Op } from "sequelize";
+import { Stock, PortfolioStock } from "../models/index.js";
 
-const { Op } = require("sequelize");
-
-const PortfolioStockService = {
-  getUserPortfolioStock: async (user_id) => {
+class portfolioStockService {
+  async getUserPortfolioStock(user_id) {
     try {
       // 데이터베이스에서 user_id에 해당하는 포트폴리오 스톡을 가져오기
-      const userPortfolioStocks = await portfolioStock.findAll({
+      const userPortfolioStocks = await PortfolioStock.findAll({
         where: { user_id },
         attributes: ["portfoliostock_id", "user_id", "stock_id"],
       });
@@ -47,10 +45,10 @@ const PortfolioStockService = {
       });
       return combinedInfo;
     } catch (error) {
-      console.error("Service error:", error);
-      throw new Error("Error fetching user portfolio stocks");
+      console.error("Error in getUserPortfolioStock:", error.message);
+      throw new Error("Failed to fetch user portfolio stocks");
     }
-  },
-};
+  }
+}
 
-module.exports = PortfolioStockService;
+export default new portfolioStockService();

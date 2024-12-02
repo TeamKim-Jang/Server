@@ -1,5 +1,5 @@
-const express = require("express");
-const PredictionController = require("../controllers/predictionController");
+import express from 'express';
+import PredictionController from ("../controllers/predictionController");
 const router = express.Router();
 
 router.get("/game-status/:userId", PredictionController.getGameStatus);

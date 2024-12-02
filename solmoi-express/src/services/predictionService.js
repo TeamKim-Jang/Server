@@ -1,11 +1,10 @@
-const { Op } = require("sequelize");
-const Prediction = require("../models/predictionModel.js");
-const Stock = require("../models/stockModel.js");
-const cron = require("node-cron");
+import { Op } from "sequelize";
+import { Prediction, Stock } from "../models/index.js";
+import cron from "node-cron";
 
-const PredictionService = {
+class PredictionService {
   // 사용자의 전날 예측 확인
-  getYesterdayPrediction: async (userId) => {
+  async getYesterdayPrediction(userId) {
     try {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -29,10 +28,10 @@ const PredictionService = {
       console.error("Error in getYesterdayPrediction:", error);
       throw error;
     }
-  },
+  }
 
   // 오늘의 예측 확인
-  getTodayPrediction: async (userId) => {
+  async getTodayPrediction(userId) {
     try {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -55,10 +54,10 @@ const PredictionService = {
       console.error("Error in getTodayPrediction:", error);
       throw error;
     }
-  },
+  }
 
   // 랜덤 주식 선택
-  getRandomStock: async () => {
+  async getRandomStock() {
     try {
       const stock = await Stock.findOne({
         order: Stock.sequelize.random(),
@@ -70,10 +69,10 @@ const PredictionService = {
       console.error("Error in getRandomStock:", error);
       throw error;
     }
-  },
+  }
 
   // 예측 생성
-  createPrediction: async (userId, stockId, predictionUpOrDown) => {
+  async createPrediction(userId, stockId, predictionUpOrDown) {
     try {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -114,10 +113,10 @@ const PredictionService = {
       console.error("Error in createPrediction:", error);
       throw error;
     }
-  },
+  }
 
   // 24시간마다 예측 결과 업데이트 (크론 작업)
-  updatePredictionResults: async () => {
+  async updatePredictionResults() {
     try {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -153,17 +152,19 @@ const PredictionService = {
       console.error("Error in updatePredictionResults:", error);
       throw error;
     }
-  },
-};
+  }
+}
+
+const predictionService = new PredictionService();
 
 // 매일 자정에 예측 결과 업데이트
 cron.schedule("0 0 * * *", async () => {
   try {
-    await PredictionService.updatePredictionResults();
+    await predictionService.updatePredictionResults();
     console.log("Daily prediction results updated successfully");
   } catch (error) {
     console.error("Error updating daily prediction results:", error);
   }
 });
 
-module.exports = PredictionService;
+export default predictionService;

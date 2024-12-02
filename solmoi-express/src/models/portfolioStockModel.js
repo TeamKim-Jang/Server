@@ -1,6 +1,6 @@
 // src/models/portfoliostockModel.js
-const { DataTypes } = require("sequelize");
-const sequelize = require("../../db.js");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 // Define the PortfolioStock model
 const portfolioStock = sequelize.define(
@@ -27,4 +27,4 @@ const portfolioStock = sequelize.define(
   }
 );
 
-module.exports = portfolioStock;
+export default portfolioStock;
