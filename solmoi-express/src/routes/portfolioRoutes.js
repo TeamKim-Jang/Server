@@ -1,5 +1,5 @@
-const express = require("express");
-const PortfolioController = require("../controllers/portfolioController");
+import express from "express";
+import PortfolioController from "../controllers/portfolioController.js";
 const router = express.Router();
 
 router.get("/:id", PortfolioController.getUserPortfolio);

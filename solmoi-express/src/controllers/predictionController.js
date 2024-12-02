@@ -1,6 +1,6 @@
 import predictionService from "../services/predictionService.js";
 
-class PredictionController {
+class predictionController {
   async getGameStatus(req, res) {
     try {
       const userId = req.params.userId; // 실제 환경에서는 인증 시스템에서 가져와야 함
@@ -61,4 +61,4 @@ class PredictionController {
   }
 }
 
-export default new PredictionController();
+export default new predictionController();

@@ -1,8 +1,8 @@
-import express from 'express';
-import PredictionController from ("../controllers/predictionController");
+import express from "express";
+import predictionController from "../controllers/predictionController.js";
 const router = express.Router();
 
-router.get("/game-status/:userId", PredictionController.getGameStatus);
-router.post("/predict", PredictionController.createPrediction);
+router.get("/game-status/:userId", predictionController.getGameStatus);
+router.post("/predict", predictionController.createPrediction);
 
-module.exports = router;
+export default router;
