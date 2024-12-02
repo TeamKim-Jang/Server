@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -8,6 +9,16 @@ import portfolioStockRoutes from "./routes/portfolioStockRoutes.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 
 import { User, Portfolio, School, Ranking } from "./models/index.js";
+=======
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import sequelize from './config/db.js';
+import rankingRoutes from './routes/rankingRoutes.js';
+import { User, Portfolio, School, Ranking } from './models/index.js';
+import newsRoutes from '../src/routes/news.js'
+import newsapiRoutes from '../src/routes/newsapi.js'
+>>>>>>> a790a17cd44ee0e0978db1ee343924c6de5fb26f
 
 dotenv.config();
 
@@ -30,10 +41,15 @@ const initializeDB = async () => {
   }
 };
 
+<<<<<<< HEAD
 app.use("/api/ranking", rankingRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/prediction", predictionRoutes);
 app.use("/api/portfolioStock", portfolioStockRoutes);
+=======
+app.use('/api/ranking', rankingRoutes);
+app.use("/api/news",newsapiRoutes)
+>>>>>>> a790a17cd44ee0e0978db1ee343924c6de5fb26f
 
 const startServer = async () => {
   await initializeDB();
