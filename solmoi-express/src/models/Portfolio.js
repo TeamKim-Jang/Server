@@ -5,7 +5,7 @@ const Portfolio = sequelize.define(
   "Portfolio",
   {
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
       allowNull: false,
       references: {
