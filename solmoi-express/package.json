@@ -12,6 +12,7 @@
     "axios": "^1.7.7",
     "bucket": "^0.0.1",
     "cors": "^2.8.5",
+    "docker": "^1.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "heic-convert": "^2.1.0",
@@ -24,6 +25,8 @@
     "node-cron": "^3.0.3",
     "sequelize": "^6.37.5",
     "sharp": "^0.33.5"
+    "mysql": "^2.18.1",
+    "systemctl": "^0.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",

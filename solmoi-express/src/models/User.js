@@ -36,8 +36,8 @@
       },
     },
     {
-      tableName: 'User', // 정확히 대문자로 시작하는 테이블 이름 지정
-      timestamps: false, // createdAt, updatedAt 자동 생성 방지
+      tableName: 'User',
+      timestamps: false,
     }
   );
   
