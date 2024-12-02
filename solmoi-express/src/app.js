@@ -4,6 +4,8 @@ import cors from 'cors';
 import sequelize from './config/db.js';
 import rankingRoutes from './routes/rankingRoutes.js';
 import { User, Portfolio, School, Ranking } from './models/index.js';
+import newsRoutes from '../src/routes/news.js'
+import newsapiRoutes from '../src/routes/newsapi.js'
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ const initializeDB = async () => {
 };
 
 app.use('/api/ranking', rankingRoutes);
+app.use("/api/news",newsapiRoutes)
 
 const startServer = async () => {
   await initializeDB();
