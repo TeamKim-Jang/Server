@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors'; // CORS 모듈 가져오기
 import authRoutes from './routes/authRoutes.js';
 import attendanceRoutes from './routes/attendanceRoutes.js'
-import sequelize from './config/databases.js';
+import sequelize from './config/db.js';
 
 const app = express();
 
