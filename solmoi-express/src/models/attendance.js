@@ -12,7 +12,7 @@ const Attendance = sequelize.define('Attendance', {
       defaultValue: 0,
     },
   }, {
-    tableName: 'attendance',
+    tableName: 'Attendance',
     freezeTableName: true,
   });
 

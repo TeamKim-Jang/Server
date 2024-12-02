@@ -1,45 +1,45 @@
-// models/user.js
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+  import { DataTypes } from 'sequelize';
+  import sequelize from '../config/db.js';
 
-const User = sequelize.define('User', {
-  user_name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  nickname:{
-    type: DataTypes.STRING,
-    allowNull: false,
-
-  },
-  birth_date:{
-    type:DataTypes.DATE,
-    allowNull:false,
-  },
-  phone_number: {
-    type:DataTypes.STRING,
-    allowNull:true
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
+  const User = sequelize.define(
+    'User',
+    {
+      user_id: {
+        type: DataTypes.BIGINT,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      user_name: {
+        type: DataTypes.STRING(20),
+      },
+      nickname: {
+        type: DataTypes.STRING(20),
+      },
+      birth_date: {
+        type: DataTypes.STRING(200),
+      },
+      phone_number: {
+        type: DataTypes.BIGINT,
+      },
+      email: {
+        type: DataTypes.STRING(200),
+      },
+      password: {
+        type: DataTypes.STRING(200),
+      },
+      total_sol_leaf: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      school_id: {
+        type: DataTypes.BIGINT,
+      },
     },
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  total_sol_leaf: {
-    type: DataTypes.BIGINT,
-    allowNull:true,
-    defaultValue: 0
-  }
-}, {
-  tableName: 'user',
-  freezeTableName: true,
-});
-
-export default User;
+    {
+      tableName: 'User',
+      timestamps: false,
+    }
+  );
+  
+  export default User;
