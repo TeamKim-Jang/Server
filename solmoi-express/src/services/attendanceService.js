@@ -1,4 +1,4 @@
-import { User, Attendance } from '../models/user.js';
+import { User, Attendance } from '../models/index.js';
 import Sequelize, { Op } from 'sequelize';
 
 const attendanceService = {

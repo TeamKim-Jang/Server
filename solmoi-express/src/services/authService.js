@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { User, School } from '../models/user.js'; // User와 School을 함께 import
+import { User, School } from '../models/index.js';
 import generateToken from '../utils/generateToken.js';
 
 const authService = {

@@ -37,29 +37,9 @@ const User = sequelize.define('User', {
     allowNull:true,
     defaultValue: 0
   }
+}, {
+  tableName: 'user',
+  freezeTableName: true,
 });
 
-const School = sequelize.define('School', {
-  school_name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
-
-const Attendance = sequelize.define('Attendance', {
-  attendance_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  sol_leaf_earned: {
-    type: DataTypes.BIGINT,
-    allowNull:true,
-    defaultValue: 0
-  }
-});
-
-// 1대다 관계 설정
-User.belongsTo(School, { foreignKey: 'school_id' }); // User 테이블에 shcool_id 외래키 생성
-Attendance.belongsTo(User, { foreignKey: 'user_id' }); // Attendance 테이블에 user_id 외래키 생성
-
-export { User, School, Attendance };
+export default User;
