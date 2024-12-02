@@ -8,6 +8,7 @@ import Stock from "./Stock.js";
 import News from "./News.js";
 import NewsRead from "./NewsRead.js";
 import Transaction from "./Transaction.js";
+import Attendance from "./Attendance.js";
 
 // User와 Portfolio (1:1)
 User.hasOne(Portfolio, { foreignKey: "user_id" });
@@ -20,6 +21,10 @@ User.belongsTo(School, { foreignKey: "school_id" });
 // User와 Ranking (1:N)
 User.hasMany(Ranking, { foreignKey: "user_id" });
 Ranking.belongsTo(User, { foreignKey: "user_id" });
+
+// User와 Attendance (1:N)
+User.hasMany(Attendance, { foreignKey: "user_id" });
+Attendance.belongsTo(User, { foreignKey: "user_id" });
 
 // User와 PortfolioStock (1:N)
 User.hasMany(PortfolioStock, { foreignKey: "user_id" });
@@ -64,4 +69,5 @@ export {
   News,
   NewsRead,
   Transaction,
+  Attendance,
 };
