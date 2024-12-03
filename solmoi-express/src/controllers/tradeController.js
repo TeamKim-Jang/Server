@@ -1,4 +1,4 @@
-import TradeService from "./services/TradeService.js";
+import TradeService from "../services/tradeService.js";
 
 class TradeController {
   async buyStock(req, res) {

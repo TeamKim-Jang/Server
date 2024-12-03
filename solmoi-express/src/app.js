@@ -12,6 +12,7 @@ import newsapiRoutes from "./routes/newsapi.js";
 import stockRoutes from "./routes/stockRoutes.js";
 import stockRepository from "./repositories/stockRepository.js";
 import stockUpdaterScheduler from "./schedulers/stockUpdaterScheduler.js";
+import tradeRoutes from "./routes/tradeRoutes.js";
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/news", newsapiRoutes);
 app.use("/api/stock", stockRoutes);
+app.use("/api/trade", tradeRoutes);
 
 (async () => {
   try {
