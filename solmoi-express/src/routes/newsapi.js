@@ -92,6 +92,7 @@ router.post('/crawl', async (req, res) => {
   }
 });
 
+
 // **뉴스 조회** - 키워드 기반 필터링 추가
 router.get('/', async (req, res) => {
   const keywordsToNames = {
@@ -109,7 +110,7 @@ router.get('/', async (req, res) => {
   try {
     const results = await News.findAll({
       where: { [Op.or]: keywordConditions },
-      order: [['created_at', 'DESC']],
+      // order: [['created_at', 'DESC']],
       limit: 50,
     });
 
@@ -135,7 +136,7 @@ router.get('/invest/solleafcontent/news/:newsId', async (req, res) => {
       where: { user_id, read_date },
     });
 
-    console.log(`ℹ️ 현재 사용자의 오늘 읽은 뉴스 개수: ${dailyCount}`);
+    console.log(`ℹ️ 현재 사용자의 오늘 읽은 뉴스 개수: ${dailyCount+1}`);
 
     if (dailyCount >= 10) {
       console.log(`🚫 오늘 읽은 뉴스가 ${dailyCount}개로 제한 초과.`);
