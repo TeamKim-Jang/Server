@@ -1,3 +1,4 @@
+//models/index.js
 import User from "./User.js";
 import Portfolio from "./Portfolio.js";
 import School from "./School.js";
