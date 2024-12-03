@@ -1,3 +1,4 @@
+//controllers/attendanceController.js
 import attendanceService from '../services/attendanceService.js';
 
 const attendanceController = {
@@ -5,8 +6,11 @@ const attendanceController = {
   getAttendanceStatus: async (req, res) => {
     console.log('getAttendanceStatus called');
     try {
-      const userId = req.userId; // JWT 인증에서 가져온 사용자 ID
-      const status = await attendanceService.getAttendanceStatus(userId);
+      const user = req.user;
+      if(!user){
+        return res.status(401).json({error: 'User not authenticated'});
+      }
+      const status = await attendanceService.getAttendanceStatus(user);
       res.status(200).json(status);
     } catch (error) {
       console.error('Error in fetching attendance status:', error.message);
@@ -17,8 +21,11 @@ const attendanceController = {
   // 오늘 출석 체크
   checkInAttendance: async (req, res) => {
     try {
-      const userId = req.userId; // JWT 인증에서 가져온 사용자 ID
-      const result = await attendanceService.checkInAttendance(userId);
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+      }
+      const result = await attendanceService.checkInAttendance(user);
       res.status(200).json(result);
     } catch (error) {
       console.error('Error in checking attendance:', error.message);
