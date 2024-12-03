@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 
-// Define the Stock model
 const Stock = sequelize.define(
   "Stock",
   {
@@ -29,7 +28,7 @@ const Stock = sequelize.define(
     },
   },
   {
-    tableName: "stock",
+    tableName: "Stock",
     timestamps: false,
   }
 );

@@ -1,8 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import Stock from "./stockModel.js"; // Import Stock model
+import Stock from "./Stock.js"; 
 
-// Define the Prediction model
 const Prediction = sequelize.define(
   "Prediction",
   {
@@ -22,36 +21,35 @@ const Prediction = sequelize.define(
     },
     is_correct: {
       type: DataTypes.BOOLEAN,
-      allowNull: true, // Can be null until the prediction is verified
+      allowNull: true, 
     },
     user_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       references: {
-        model: "users", // References the user table
-        key: "id",
+        model: "User",
+        key: "user_id",
       },
     },
     stock_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       references: {
-        model: "stock", // References the stock table
+        model: "Stock", 
         key: "stock_id",
       },
-    },
+    },    
     prediction_stock_value: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: true,
     },
   },
   {
-    tableName: "prediction",
+    tableName: "Prediction",
     timestamps: false,
   }
 );
 
-// Define association with Stock model
 Prediction.belongsTo(Stock, { foreignKey: "stock_id" });
 
 export default Prediction;

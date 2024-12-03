@@ -5,7 +5,7 @@ const News = sequelize.define(
   'News',
   {
     news_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.BIGINT,
       primaryKey: true,
     },
     title: {
@@ -20,8 +20,8 @@ const News = sequelize.define(
     },
   },
   {
-    timestamps: false, // createdAt, updatedAt 비활성화
-    tableName: 'News', // 명시적으로 테이블 이름 지정
+    timestamps: false, 
+    tableName: 'News',
   }
 );
 
