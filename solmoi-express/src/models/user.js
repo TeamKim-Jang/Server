@@ -1,4 +1,3 @@
-  //models/user.js
   import { DataTypes } from 'sequelize';
   import sequelize from '../config/db.js';
 
@@ -14,7 +13,6 @@
       user_name: {
         type: DataTypes.STRING(20),
       },
-
       nickname: {
         type: DataTypes.STRING(20),
       },
@@ -37,10 +35,6 @@
       school_id: {
         type: DataTypes.BIGINT,
       },
-      access_token: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      }
     },
     {
       tableName: 'User',
