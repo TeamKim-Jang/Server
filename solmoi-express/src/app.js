@@ -8,6 +8,7 @@ import portfolioStockRoutes from "./routes/portfolioStockRoutes.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
 import attendanceRoutes from "./routes/attendanceRoutes.js";
+import newsapiRoutes from '../src/routes/newsapi.js'
 
 import { User, Portfolio, School, Ranking } from "./models/index.js";
 
@@ -38,6 +39,7 @@ app.use("/api/prediction", predictionRoutes);
 app.use("/api/portfolioStock", portfolioStockRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/news",newsapiRoutes);
 
 const startServer = async () => {
   await initializeDB();
