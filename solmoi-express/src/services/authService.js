@@ -77,8 +77,11 @@ const authService = {
 
       return {
         token,
-        userName: user.user_name,
-        email: user.email,
+
+        userName:user.user_name,
+        email:user.email,
+        user_id:user.user_id,
+
       };
     } catch (error) {
       console.error("Error in loginUser:", error.message);
