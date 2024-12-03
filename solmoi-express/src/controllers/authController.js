@@ -1,3 +1,4 @@
+//controllers/authController.js
 import authService from '../services/authService.js';
 
 const authController = {
@@ -45,7 +46,20 @@ const authController = {
       // 기타 예상치 못한 서버 에러 처리
       return res.status(500).json({ error: "서버에서 문제가 발생했습니다. 다시 시도해주세요." });
     }
-  },  
+  },
+  logout: async (req, res) => {
+    try {
+      const userId = req.user.user_id; // authMiddleware에서 설정한 유저 정보
+      const user = await User.findByPk(userId);
+      if (user) {
+        await user.update({ access_token: null });
+      }
+      res.status(200).json({ message: '로그아웃 성공' });
+    } catch (error) {
+      console.error('Logout error:', error.message);
+      res.status(500).json({ error: '로그아웃 처리 중 문제가 발생했습니다.' });
+    }
+  },
 };
 
 export default authController;

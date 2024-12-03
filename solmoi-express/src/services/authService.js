@@ -1,3 +1,4 @@
+//services/authService.js
 import bcrypt from "bcrypt";
 import { User, School } from "../models/index.js";
 import generateToken from "../utils/generateToken.js";
@@ -70,8 +71,9 @@ const authService = {
       }
 
       // 토큰 생성
-      const token = generateToken(user.id);
-      console.log("Generated Token:", token);
+      const token = generateToken(user.user_id);
+
+      await user.update({ access_token: token });
 
       return {
         token,

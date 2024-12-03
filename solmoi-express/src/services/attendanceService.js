@@ -1,20 +1,17 @@
+//services/attendanceService.js
 import { User, Attendance } from '../models/index.js';
-import Sequelize, { Op } from 'sequelize';
+import { Op } from 'sequelize';
 
 const attendanceService = {
-  getAttendanceStatus: async (userId) => {
+  getAttendanceStatus: async (user) => {
     const today = new Date();
-    // 이번 달의 첫 날과 오늘의 끝 시간 설정
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999);
+    const endOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
 
-    console.log('Start of Month:', startOfMonth);
-    console.log('End of Today:', endOfToday);
 
     const monthlyAttendanceCount = await Attendance.count({
       where: {
-        user_id: userId,
+        user_id: user.user_id,
         attendance_date: {
           [Op.gte]: startOfMonth,
           [Op.lte]: endOfToday,
@@ -22,21 +19,18 @@ const attendanceService = {
       },
     });
 
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-
     const hasCheckInToday = await Attendance.findOne({
       where: {
-        user_id: userId,
+        user_id: user.user_id,
         attendance_date: {
-          [Op.gte]: startOfToday,
-          [Op.lte]: endOfToday,
+          [Op.gte]: today.setHours(0, 0, 0, 0),
+          [Op.lte]: today.setHours(23, 59, 59, 999),
         },
       },
     });
 
-    console.log('Monthly Attendance Count:', monthlyAttendanceCount);
-    console.log('Has Check-In Today:', !!hasCheckInToday);
+    console.log('이달의 출석 횟수:', monthlyAttendanceCount);
+    console.log('오늘 출첵 여부:', !!hasCheckInToday);
 
     return {
       monthlyAttendanceCount,
@@ -44,18 +38,15 @@ const attendanceService = {
     };
   },
 
-  checkInAttendance: async (userId) => {
+  checkInAttendance: async (user) => {
     try {
-      const startOfToday = new Date();
-      startOfToday.setHours(0, 0, 0, 0);
+      const today = new Date();
+      const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const endOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
 
-      const endOfToday = new Date();
-      endOfToday.setHours(23, 59, 59, 999);
-
-      // 이미 오늘 출석 체크를 했는지 확인
       const existingAttendance = await Attendance.findOne({
         where: {
-          user_id: userId,
+          user_id: user.user_id,
           attendance_date: {
             [Op.gte]: startOfToday,
             [Op.lte]: endOfToday,
@@ -71,16 +62,17 @@ const attendanceService = {
 
       // 새로운 출석 체크 생성
       const attendance = await Attendance.create({
-        user_id: userId,
-        attendance_date: new Date(), // 현재 날짜와 시간 저장
-        sol_leaf_earned: 10, // 기본 보상
+        user_id: user.user_id,
+        attendance_date: new Date(),
+        sol_leaf_earned: 10,
       });
 
-      // 유저의 총 솔리프 업데이트
-      const user = await User.findByPk(userId);
+      // 유저의 총 포인트 업데이트
       if (user) {
         user.total_sol_leaf += 10;
         await user.save();
+      } else {
+        throw new Error('User not found while updating total_sol_leaf');
       }
 
       return {
@@ -89,10 +81,10 @@ const attendanceService = {
       };
     } catch (error) {
       console.error('Error during attendance check:', error.message);
-      throw error; // 원본 에러를 다시 던짐
+      throw error;
     }
   },
-  
 };
 
 export default attendanceService;
+
