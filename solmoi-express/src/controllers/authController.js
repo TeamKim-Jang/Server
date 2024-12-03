@@ -4,7 +4,7 @@ const authController = {
   register: async (req, res) => {
     try {
       const { user_name, nickname, birth_date, phone_number, email, password, school_name } = req.body;
-
+      console.log(req.body);
       // 회원가입 처리
       const result = await authService.registerUser(
         user_name,
@@ -23,7 +23,6 @@ const authController = {
       if (error.message === "Email already exists") {
         return res.status(400).json({ error: "이미 사용 중인 이메일입니다." });
       }
-
       // 기타 에러 처리
       return res.status(500).json({ error: "회원가입 처리 중 문제가 발생했습니다." });
     }
@@ -43,7 +42,6 @@ const authController = {
       if (error.message === "Invalid email or password") {
         return res.status(401).json({ error: "로그인 정보가 올바르지 않습니다." });
       }
-  
       // 기타 예상치 못한 서버 에러 처리
       return res.status(500).json({ error: "서버에서 문제가 발생했습니다. 다시 시도해주세요." });
     }
