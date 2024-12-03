@@ -9,8 +9,12 @@ const Ranking = sequelize.define('Ranking', {
       autoIncrement: true,
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
+      references: {
+        model: "User",
+        key: "user_id",
+      },
     },
     total_profit_loss: {
       type: DataTypes.FLOAT,

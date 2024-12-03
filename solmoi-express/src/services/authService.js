@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt';
-import { User, School } from '../models/user.js'; // User와 School을 함께 import
+import { User, School } from '../models/index.js';
 import generateToken from '../utils/generateToken.js';
 
 const authService = {
   registerUser: async (user_name, nickname, birth_date, phone_number, email, password, school_name) => {
     try {
-      console.log('Register Input Data:', { user_name, nickname, birth_date, phone_number, email, password, school_name });
 
       // 이메일 중복 확인
       const existingUser = await User.findOne({ where: { email } });
@@ -35,10 +34,8 @@ const authService = {
         phone_number,
         email,
         password: hashedPassword,
-        school_id: school.id,
+        school_id: school.dataValues.school_id,
       });
-
-      console.log('User Successfully Created:', newUser);
 
       return { message: 'User registered successfully' };
     } catch (error) {
@@ -54,13 +51,13 @@ const authService = {
       // 이메일 확인
       const user = await User.findOne({ where: { email } });
       if (!user) {
-        throw new Error('Invalid credentials'); // 이메일 오류와 비밀번호 오류를 구분하지 않음
+        throw new Error('이메일 혹은 비밀번호가 맞지 않습니다.');
       }
 
       // 비밀번호 확인
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        throw new Error('Invalid credentials'); // 이메일 오류와 비밀번호 오류를 구분하지 않음
+        throw new Error('이메일 혹은 비밀번호가 맞지 않습니다.');
       }
 
       // 토큰 생성
