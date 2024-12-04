@@ -21,14 +21,23 @@ const authMiddleware = async (req, res, next) => {
 
     const token = parts[1];
 
-     // DB에서 토큰 확인
-     const user = await User.findOne({ where: { access_token: token } });
-     if (!user) {
-       return res.status(401).json({ error: 'Invalid token' });
-     }
+    // let decoded;
+    // try {
+    //   decoded = jwt.verify(token, config.JWT_SECRET);
+    // } catch (err) {
+    //   if (err.name === 'TokenExpiredError') {
+    //     return res.status(401).json({ error: 'Token expired' });
+    //   }
+    //   return res.status(401).json({ error: 'Invalid token' });
+    // }
+
+    const user = await User.findOne({ where: { access_token: token } });
+      if (!user) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
  
-     req.user = user; // 유저 정보를 요청 객체에 저장
-     next();
+    req.user = user;
+    next();
     
   } catch (error) {
     console.error('Auth Middleware Error:', error.message);
