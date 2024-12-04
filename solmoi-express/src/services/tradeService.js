@@ -5,6 +5,10 @@ import portfolioRepository from "../repositories/portfolioRepository.js";
 
 class TradeService {
   async buyStock(userId, stockId, quantity) {
+    if (!userId || !stockId || !quantity) {
+        throw new Error("필수 데이터가 누락되었습니다.");
+      }
+
     const portfolio = await portfolioRepository.getPortfolioByUserId(userId);
     const stock = await tradeRepository.getStockById(stockId);
 
@@ -45,6 +49,10 @@ class TradeService {
   }
 
   async sellStock(userId, stockId, quantity) {
+    if (!userId || !stockId || !quantity) {
+        throw new Error("필수 데이터가 누락되었습니다.");
+      }
+
     const portfolio = await portfolioRepository.getPortfolioByUserId(userId);
     const stock = await tradeRepository.getStockById(stockId);
 
