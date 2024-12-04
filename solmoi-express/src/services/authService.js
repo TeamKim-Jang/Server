@@ -1,30 +1,21 @@
 //services/authService.js
-import bcrypt from "bcrypt";
-import { User, School } from "../models/index.js";
-import generateToken from "../utils/generateToken.js";
+import bcrypt from 'bcrypt';
+import { User, School, Ranking, Portfolio, PortfolioStock } from '../models/index.js';
+import generateToken from '../utils/generateToken.js';
 
 const authService = {
-  registerUser: async (
-    user_name,
-    nickname,
-    birth_date,
-    phone_number,
-    email,
-    password,
-    school_name
-  ) => {
+  registerUser: async (user_name, nickname, birth_date, phone_number, email, password, school_name) => {
     try {
+
       // 이메일 중복 확인
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
-        throw new Error("Email already exists");
+        throw new Error('Email already exists');
       }
 
       // 날짜 유효성 검사
       if (!birth_date || isNaN(new Date(birth_date).getTime())) {
-        throw new Error(
-          "Invalid birth_date format. Expected format: YYYY-MM-DD"
-        );
+        throw new Error('Invalid birth_date format. Expected format: YYYY-MM-DD');
       }
 
       // 학교 정보 확인
@@ -37,20 +28,38 @@ const authService = {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // User 생성
-      const newUser = await User.create({
-        user_name,
-        nickname,
-        birth_date,
-        phone_number,
-        email,
-        password: hashedPassword,
-        school_id: school.dataValues.school_id,
-      });
+      const newUser = await User.create(
+        {
+          user_name,
+          nickname,
+          birth_date,
+          phone_number,
+          email,
+          password: hashedPassword,
+          school_id: school.dataValues.school_id,
+        }
+      );
 
-      return { message: "User registered successfully" };
+      await Ranking.create(
+        {
+          user_id: newUser.user_id,
+          total_profit_loss: 0,
+        }
+      );
+
+      await Portfolio.create(
+        {
+          user_id: newUser.user_id,
+          cash_balance: 2000000,
+          total_investment: 0,
+          total_profit_loss: 0,
+        }
+      );
+
+      return { message: 'User registered successfully' };
     } catch (error) {
-      console.error("Error in registerUser:", error.message);
-      throw new Error("Registration failed. Please try again later.");
+      console.error('Error in registerUser:', error.message);
+      throw new Error('Registration failed. Please try again later.');
     }
   },
 
