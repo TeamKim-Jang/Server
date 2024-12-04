@@ -10,6 +10,7 @@ import News from "./News.js";
 import NewsRead from "./NewsRead.js";
 import Transaction from "./Transaction.js";
 import Attendance from "./Attendance.js";
+import RewardHistory from "./RewardHistory.js"; 
 
 // User와 Portfolio (1:1)
 User.hasOne(Portfolio, { foreignKey: "user_id" });
@@ -59,6 +60,10 @@ Transaction.belongsTo(User, { foreignKey: "user_id" });
 Stock.hasMany(Transaction, { foreignKey: "stock_id" });
 Transaction.belongsTo(Stock, { foreignKey: "stock_id" });
 
+// User와 RewardHistory (1:N)
+User.hasMany(RewardHistory, { foreignKey: "user_id" });
+RewardHistory.belongsTo(User, { foreignKey: "user_id" }); // 관계 추가
+
 export {
   User,
   Portfolio,
@@ -71,4 +76,5 @@ export {
   NewsRead,
   Transaction,
   Attendance,
+  RewardHistory, 
 };
