@@ -52,7 +52,9 @@ class portfolioStockService {
       const portfolioStocks = await PortfolioStock.findAll();
 
       for (const portfolioStock of portfolioStocks) {
-        const stock = await stockRepository.getStockById(portfolioStock.stock_id);
+        const stock = await stockRepository.getStockById(
+          portfolioStock.stock_id
+        );
         if (stock) {
           // 현재가로 포트폴리오 업데이트
           portfolioStock.current_price = stock.current_price;

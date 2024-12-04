@@ -16,8 +16,9 @@ import stockRoutes from "./routes/stockRoutes.js";
 import stockRepository from "./repositories/stockRepository.js";
 import stockUpdaterScheduler from "./schedulers/stockUpdaterScheduler.js";
 import tradeRoutes from "./routes/tradeRoutes.js";
-import rewardRoutes from "./routes/rewardRoutes.js"; 
-import solleafRoutes from "./routes/solleafRoutes.js"; 
+import rewardRoutes from "./routes/rewardRoutes.js";
+import solleafRoutes from "./routes/solleafRoutes.js";
+import allstockRoutes from "./routes/allstockRoutes.js";
 
 dotenv.config();
 
@@ -52,11 +53,13 @@ app.use("/api/stock", stockRoutes);
 app.use("/api/trade", tradeRoutes);
 app.use("/api/rewards", rewardRoutes);
 app.use("/api/user", solleafRoutes);
-
-
+app.use("/api/allstock", allstockRoutes);
 (async () => {
   try {
-    await stockRepository.fetchAccessToken(process.env.APP_KEY, process.env.APP_SECRET);
+    await stockRepository.fetchAccessToken(
+      process.env.APP_KEY,
+      process.env.APP_SECRET
+    );
     console.log("Access Token 초기화 성공");
   } catch (error) {
     console.error("Access Token 초기화 실패:", error.message);
@@ -70,6 +73,8 @@ const startServer = async () => {
   // Trie 초기화
   await schoolService.initializeTrie();
 
-  app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, "0.0.0.0", () =>
+    console.log(`Server running on port ${PORT}`)
+  );
 };
 startServer();

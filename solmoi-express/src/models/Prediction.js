@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import Stock from "./Stock.js"; 
+import Stock from "./Stock.js";
 
 const Prediction = sequelize.define(
   "Prediction",
@@ -21,7 +21,7 @@ const Prediction = sequelize.define(
     },
     is_correct: {
       type: DataTypes.BOOLEAN,
-      allowNull: true, 
+      allowNull: true,
     },
     user_id: {
       type: DataTypes.BIGINT,
@@ -35,10 +35,10 @@ const Prediction = sequelize.define(
       type: DataTypes.BIGINT,
       allowNull: false,
       references: {
-        model: "Stock", 
+        model: "Stock",
         key: "stock_id",
       },
-    },    
+    },
     prediction_stock_value: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: true,

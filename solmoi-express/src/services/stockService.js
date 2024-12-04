@@ -2,12 +2,17 @@ import stockRepository from "../repositories/stockRepository.js";
 
 class StockService {
   async getStockData(stockCode, startDate, endDate, periodType) {
-    const stockData = await stockRepository.getStockPrices(stockCode, startDate, endDate, periodType);
-  
+    const stockData = await stockRepository.getStockPrices(
+      stockCode,
+      startDate,
+      endDate,
+      periodType
+    );
+
     if (!stockData || stockData.length === 0) {
       throw new Error("No stock data available");
     }
-  
+
     return stockData.map((item) => ({
       date: this.formatDate(item.date),
       open: item.open,
@@ -16,7 +21,7 @@ class StockService {
       close: item.close,
     }));
   }
-  
+
   formatDate(rawDate) {
     if (typeof rawDate === "string") {
       const year = rawDate.substring(0, 4);

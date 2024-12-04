@@ -1,5 +1,5 @@
-import express from 'express';
-import stockController from '../controllers/stockController.js';
+import express from "express";
+import stockController from "../controllers/stockController.js";
 
 const router = express.Router();
 

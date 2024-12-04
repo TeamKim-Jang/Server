@@ -41,21 +41,21 @@ class StockRepository {
       fid_period_div_code: periodType, // D: 일봉, W: 주봉, M: 월봉
       fid_org_adj_prc: "0",
     };
-  
+
     console.log("Requesting stock data with params:", params);
-  
+
     const headers = {
       Authorization: `Bearer ${this.accessToken}`,
       appkey: process.env.APP_KEY,
       appsecret: process.env.APP_SECRET,
       tr_id: "FHKST01010400",
     };
-  
+
     const response = await axios.get(
       `${this.apiURL}/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice`,
       { headers, params }
     );
-  
+
     return response.data.output.map((item) => ({
       date: item.stck_bsop_date,
       open: parseFloat(item.stck_oprc),
@@ -63,7 +63,34 @@ class StockRepository {
       low: parseFloat(item.stck_lwpr),
       close: parseFloat(item.stck_clpr),
     }));
-  }  
+  }
+  async getAllStocks() {
+    try {
+      console.log(
+        Stock.findAll({
+          attributes: [
+            "stock_id",
+            "name",
+            "symbol",
+            "current_price",
+            "price_change",
+          ],
+        })
+      );
+      return await Stock.findAll({
+        attributes: [
+          "stock_id",
+          "name",
+          "symbol",
+          "current_price",
+          "price_change",
+        ], // 필요한 컬럼만 선택
+      });
+    } catch (error) {
+      console.error("Error fetching all stocks:", error.message);
+      throw new Error("Failed to fetch stocks from the database");
+    }
+  }
 }
 
 export default new StockRepository();

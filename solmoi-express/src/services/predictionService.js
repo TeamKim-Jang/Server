@@ -158,7 +158,7 @@ class PredictionService {
 const predictionService = new PredictionService();
 
 // 매일 자정에 예측 결과 업데이트
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("*/1 * * * *", async () => {
   try {
     await predictionService.updatePredictionResults();
     console.log("Daily prediction results updated successfully");
