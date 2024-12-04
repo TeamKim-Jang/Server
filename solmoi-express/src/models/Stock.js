@@ -12,7 +12,8 @@ const Stock = sequelize.define(
     },
     name: {
       type: DataTypes.STRING(200),
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
     symbol: {
       type: DataTypes.INTEGER,
@@ -24,7 +25,7 @@ const Stock = sequelize.define(
     },
     price_change: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

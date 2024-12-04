@@ -6,6 +6,14 @@ class StockRepository {
     this.accessToken = null;
   }
 
+  async saveStockDataToDB(stockCode, currentPrice) {
+    await Stock.upsert({
+      stock_id: stockCode,
+      current_price: currentPrice,
+      last_updated: new Date(),
+    });
+  }
+
   async fetchAccessToken(appKey, appSecret) {
     const response = await axios.post(
       `${this.apiURL}/oauth2/tokenP`,
