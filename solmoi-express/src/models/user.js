@@ -22,7 +22,7 @@ const User = sequelize.define(
       type: DataTypes.STRING(200),
     },
     phone_number: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(20),
     },
     email: {
       type: DataTypes.STRING(200),
