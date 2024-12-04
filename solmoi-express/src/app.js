@@ -16,6 +16,8 @@ import stockRoutes from "./routes/stockRoutes.js";
 import stockRepository from "./repositories/stockRepository.js";
 import stockUpdaterScheduler from "./schedulers/stockUpdaterScheduler.js";
 import tradeRoutes from "./routes/tradeRoutes.js";
+import rewardRoutes from "./routes/rewardRoutes.js"; 
+import solleafRoutes from "./routes/solleafRoutes.js"; 
 
 dotenv.config();
 
@@ -48,6 +50,9 @@ app.use("/api/schools", schoolRoutes);
 app.use("/api/news", newsapiRoutes);
 app.use("/api/stock", stockRoutes);
 app.use("/api/trade", tradeRoutes);
+app.use("/api/rewards", rewardRoutes);
+app.use("/api/user", solleafRoutes);
+
 
 (async () => {
   try {
