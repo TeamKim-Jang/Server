@@ -5,7 +5,9 @@ class StockController {
     const { stockCode } = req.params;
     const { duration } = req.query;
 
-    console.log(`Fetching stock data for ${stockCode} with duration: ${duration}`);
+    console.log(
+      `Fetching stock data for ${stockCode} with duration: ${duration}`
+    );
 
     try {
       const now = new Date();
@@ -16,7 +18,7 @@ class StockController {
 
       switch (duration) {
         case "1D":
-          periodType = "D"; 
+          periodType = "D";
           const oneDayAgo = new Date();
           oneDayAgo.setDate(now.getDate() - 1);
           startDate = oneDayAgo.toISOString().split("T")[0];
@@ -49,10 +51,17 @@ class StockController {
           return res.status(400).json({ error: "Invalid duration parameter" });
       }
 
-      console.log(`Fetching data from ${startDate} to ${endDate} with periodType: ${periodType}`);
+      console.log(
+        `Fetching data from ${startDate} to ${endDate} with periodType: ${periodType}`
+      );
 
       // 주식 데이터 가져오기
-      const stockData = await stockService.getStockData(stockCode, startDate, endDate, periodType);
+      const stockData = await stockService.getStockData(
+        stockCode,
+        startDate,
+        endDate,
+        periodType
+      );
 
       if (!stockData || stockData.length === 0) {
         return res.status(404).json({ error: "Stock data not found" });
@@ -65,6 +74,18 @@ class StockController {
       res.status(500).json({ error: error.message });
     }
   }
-}
 
+  async getAllStocks(req, res) {
+    try {
+      const stocks = await stockService.getAllStocks();
+      if (!stocks || stocks.length === 0) {
+        return res.status(404).json({ error: "No stocks found" });
+      }
+      res.json({ data: stocks });
+    } catch (error) {
+      console.error("Error in getAllStocks:", error.message);
+      res.status(500).json({ error: error.message });
+    }
+  }
+}
 export default new StockController();
