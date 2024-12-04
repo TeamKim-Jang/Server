@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import axios from 'axios'; // HTTP 요청 라이브러리
 import sequelize from '../src/config/databases.js'; // 데이터베이스 설정
-import { School } from '../src/models/user.js'; // School 모델 가져오기
+import { School } from '../src/models/index.js'; // School 모델 가져오기
 
 dotenv.config(); // 환경 변수 로드
 const API_KEY = process.env.SCHOOL_API_KEY;

@@ -21,15 +21,15 @@ const authMiddleware = async (req, res, next) => {
 
     const token = parts[1];
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, config.JWT_SECRET);
-    } catch (err) {
-      if (err.name === 'TokenExpiredError') {
-        return res.status(401).json({ error: 'Token expired' });
-      }
-      return res.status(401).json({ error: 'Invalid token' });
-    }
+    // let decoded;
+    // try {
+    //   decoded = jwt.verify(token, config.JWT_SECRET);
+    // } catch (err) {
+    //   if (err.name === 'TokenExpiredError') {
+    //     return res.status(401).json({ error: 'Token expired' });
+    //   }
+    //   return res.status(401).json({ error: 'Invalid token' });
+    // }
 
     const user = await User.findOne({ where: { access_token: token } });
       if (!user) {
