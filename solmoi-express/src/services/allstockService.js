@@ -13,7 +13,7 @@ class AllStockService {
           "price_change",
         ],
       });
-      console.log(stocksInfo);
+
       return stocksInfo; // 주식 데이터 반환
       // 포트폴리오 + 주식 데이터
     } catch (error) {
