@@ -4,8 +4,7 @@ import sequelize from '../src/config/databases.js'; // 데이터베이스 설정
 import { School } from '../src/models/user.js'; // School 모델 가져오기
 
 dotenv.config(); // 환경 변수 로드
-
-const API_KEY = '21dad5d8048942f79512557f795528d3'; // 발급받은 API 키 입력
+const API_KEY = process.env.SCHOOL_API_KEY;
 const API_URL = `https://open.neis.go.kr/hub/schoolInfo?KEY=${API_KEY}&Type=json&pSize=100`;
 
 const seedSchools = async () => {

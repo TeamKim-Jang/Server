@@ -1,41 +1,32 @@
-import client from '../config/elasticsearch.js';
+import { School } from '../models/index.js';
+import Trie from '../utils/trie.js';
 
-const indexName = 'schools';
+const trie = new Trie();
 
-const schoolService = {
-  async indexData(data) {
-    try {
-      const bulkBody = data.flatMap((school) => [
-        { index: { _index: indexName } },
-        { id: school.id, name: school.name },
-      ]);
-
-      const { body } = await client.bulk({ refresh: true, body: bulkBody });
-      console.log('Indexing result:', body);
-    } catch (error) {
-      console.error('Error indexing data:', error);
-    }
-  },
-
-  async searchSchools(keyword) {
-    try {
-      const { hits } = await client.search({
-        index: indexName,
-        body: {
-          query: {
-            match_phrase_prefix: {
-              name: keyword,
-            },
-          },
-        },
-      });
-
-      return hits.hits.map((hit) => hit._source);
-    } catch (error) {
-      console.error('Error searching schools:', error);
-      throw new Error('Failed to search schools');
-    }
-  },
+// Trie 초기화
+const initializeTrie = async () => {
+    const schools = await School.findAll({ raw: true });
+    console.log(`총 ${schools.length}개의 학교를 Trie에 삽입합니다.`);
+    schools.forEach((school) => {
+        trie.insert(school.school_name, {
+            id: school.school_id,
+            name: school.school_name,
+        });
+    });
+    console.log('Trie 초기화 완료');
 };
 
-export default schoolService;
+// Trie에서 검색
+const search = (query) => {
+  console.log("Trie로 검색:", query);
+  const results = trie.search(query);
+
+  return {
+    schools: results.map((result) => ({
+      id: result.id,
+      name: result.name,
+    })),
+  };
+};
+
+export default { initializeTrie, search };

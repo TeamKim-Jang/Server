@@ -5,7 +5,7 @@ const client = new Client({
   node: 'https://localhost:9200',
   auth: {
     username: 'elastic',
-    password: '2Nnpv2*dBMJlTapY7qbR',
+    password: '0SvqMfr7kpBXUTq4x6CB',
   },
   tls: {
     rejectUnauthorized: false,
