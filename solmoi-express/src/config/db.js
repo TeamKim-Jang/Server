@@ -11,5 +11,5 @@ const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   dialect: "mysql",
   logging: false,
 });
-console.log(sequelize.config);
+
 export default sequelize;
