@@ -64,13 +64,12 @@ class TradeService {
 
     // PortfolioStock 업데이트
     if (portfolioStock.quantity === quantity) {
-      // 모든 주식 매도 -> PortfolioStock에서 삭제
-      await portfolioStockRepository.removeStockFromPortfolio(portfolioStock.id);
+        await portfolioStockRepository.removeStockFromPortfolio(portfolioStock.portfoliostock_id);
     } else {
-      // 일부주식 매도 -> 수량감소
-      await portfolioStockRepository.updateStockQuantity(portfolioStock.id, portfolioStock.quantity - quantity);
+        const remainingQuantity = portfolioStock.quantity - quantity;
+        await portfolioStockRepository.updateStockQuantity(portfolioStock.portfoliostock_id, remainingQuantity);
     }
-
+      
     // 내역 저장
     await transactionRepository.createTransaction(userId, stockId, "SELL", quantity, stock.current_price);
 
