@@ -43,12 +43,17 @@ const stockUpdaterScheduler = () => {
         setTimeout(async () => {
           try {
             const stockCode = stockCodes[i];
-            console.log(`Updating stock: ${stockCode.name} (${stockCode.code})`);
+            console.log(
+              `Updating stock: ${stockCode.name} (${stockCode.code})`
+            );
             await stockUpdaterService.updateStockPrices([stockCode]); // 주식 가격 업데이트
             await portfolioStockService.updatePortfolioStockPrices(); // 포트폴리오 가격 동기화
             console.log(`${stockCode.name} 업데이트 완료.`);
           } catch (error) {
-            console.error(`Error updating stock: ${stockCodes[i].name}`, error.message);
+            console.error(
+              `Error updating stock: ${stockCodes[i].name}`,
+              error.message
+            );
           }
         }, i * 1000);
       }
