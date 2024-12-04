@@ -18,6 +18,7 @@ const School = sequelize.define('School', {
   }
 }, {
   tableName: 'School',
+  timestamps: false,
 });
 
 export default School;
