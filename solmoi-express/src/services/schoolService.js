@@ -3,7 +3,7 @@ import Trie from '../utils/trie.js';
 
 const trie = new Trie();
 
-// Trie 초기화
+//초기화
 const initializeTrie = async () => {
     const schools = await School.findAll({ raw: true });
     console.log(`총 ${schools.length}개의 학교를 Trie에 삽입합니다.`);
@@ -13,10 +13,9 @@ const initializeTrie = async () => {
             name: school.school_name,
         });
     });
-    console.log('Trie 초기화 완료');
 };
 
-// Trie에서 검색
+//검색
 const search = (query) => {
   console.log("Trie로 검색:", query);
   const results = trie.search(query);

@@ -60,14 +60,14 @@ const attendanceService = {
         throw error;
       }
 
-      // 새로운 출석 체크 생성
+      
       const attendance = await Attendance.create({
         user_id: user.user_id,
         attendance_date: new Date(),
         sol_leaf_earned: 10,
       });
 
-      // 유저의 총 포인트 업데이트
+      
       if (user) {
         user.total_sol_leaf += 10;
         await user.save();

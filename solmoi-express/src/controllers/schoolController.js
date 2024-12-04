@@ -9,7 +9,6 @@ const searchSchools = async (req, res) => {
 
   try {
       const results = schoolService.search(query);
-      console.log("검색 결과:", results);
       res.json(results);
   } catch (error) {
       console.error('Error searching schools:', error.message);

@@ -5,7 +5,6 @@ class TrieNode {
         this.data = null;
     }
 }
-
 class Trie {
     constructor() {
         this.root = new TrieNode();
@@ -21,11 +20,9 @@ class Trie {
         }
         node.isEndOfWord = true;
         node.data = data;
-        console.log(`Trie에 삽입: ${word}`);
     }
 
     search(prefix) {
-        console.log(`search()에서 검색 중: ${prefix}`); // 검색어 로그 추가
         const node = this._findNode(prefix);
         if (!node) return [];
     
@@ -42,8 +39,6 @@ class Trie {
           }
         };
         traverse(node, [...prefix]);
-    
-        console.log(`search() 결과: ${JSON.stringify(results)}`); // 결과 로그 추가
         return results;
     }
     _findNode(prefix) {
@@ -56,18 +51,6 @@ class Trie {
         }
         return node;
     }
-
-    // collectAllWords(node) {
-    //     let results = [];
-    //     if (node.isEndOfWord) {
-    //         results.push(node.data);
-    //     }
-
-    //     for (let char in node.children) {
-    //         results = results.concat(this.collectAllWords(node.children[char]));
-    //     }
-    //     return results;
-    // }
 }
 
 export default Trie;
