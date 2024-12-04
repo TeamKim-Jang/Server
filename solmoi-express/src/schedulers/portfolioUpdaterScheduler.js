@@ -3,7 +3,7 @@ import PortfolioService from "../services/portfolioService.js";
 import userRepository from "../repositories/userRepository.js";
 
 const portfolioUpdaterScheduler = () => {
-  schedule.scheduleJob("0 0 * * *", async () => {
+  schedule.scheduleJob("*/10 * * * *", async () => {
     console.log("포트폴리오 업데이트 스케줄러 실행 중...");
 
     try {
