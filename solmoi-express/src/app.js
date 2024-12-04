@@ -8,7 +8,8 @@ import portfolioStockRoutes from "./routes/portfolioStockRoutes.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
 import attendanceRoutes from "./routes/attendanceRoutes.js";
-
+import schoolRoutes from "./routes/schoolRoutes.js";
+import schoolService from "./services/schoolService.js";
 import { User, Portfolio, School, Ranking } from "./models/index.js";
 
 dotenv.config();
@@ -38,9 +39,14 @@ app.use("/api/prediction", predictionRoutes);
 app.use("/api/portfolioStock", portfolioStockRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/schools", schoolRoutes);
 
 const startServer = async () => {
   await initializeDB();
+
+  // Trie 초기화
+  await schoolService.initializeTrie();
+
   app.listen(PORT, "0.0.0.0", () =>
     console.log(`Server running on port ${PORT}`)
   );
