@@ -26,7 +26,7 @@ class PortfolioStockRepository {
     return await PortfolioStock.create({
         user_id: userId,
         stock_id: stockId,
-        quantity,
+        quantity: quantity,
         purchase_price: purchasePrice,
     });
   }
