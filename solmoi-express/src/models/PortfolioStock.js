@@ -8,6 +8,7 @@ const PortfolioStock = sequelize.define(
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     user_id: {
       type: DataTypes.BIGINT,
@@ -21,7 +22,16 @@ const PortfolioStock = sequelize.define(
         key: "stock_id",
       },
     },
-    
+    quantity: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    purchase_price: {
+      type: DataTypes.FLOAT, 
+      allowNull: false,
+      defaultValue: 0.0,
+    },
   },
   {
     tableName: "PortfolioStock",

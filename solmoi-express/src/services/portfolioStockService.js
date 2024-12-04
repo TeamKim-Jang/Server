@@ -4,7 +4,6 @@ import { Stock, PortfolioStock } from "../models/index.js";
 class portfolioStockService {
   async getUserPortfolioStock(user_id) {
     try {
-      // 데이터베이스에서 user_id에 해당하는 포트폴리오 스톡을 가져오기
       const userPortfolioStocks = await PortfolioStock.findAll({
         where: { user_id },
         attributes: ["portfoliostock_id", "user_id", "stock_id"],
@@ -14,10 +13,8 @@ class portfolioStockService {
         return [];
       }
 
-      // 사용자가 보유한 주식의 stock_id 목록 추출
       const stockIds = userPortfolioStocks.map((item) => item.stock_id);
 
-      // Stock 모델에서 해당 stock_id에 해당하는 주식 정보 가져오기
       const stocksInfo = await Stock.findAll({
         where: {
           stock_id: {
@@ -33,7 +30,7 @@ class portfolioStockService {
         ],
       });
 
-      // 포트폴리오 정보와 주식 정보를 결합
+      // 포트폴리오 + 주식 데이터
       const combinedInfo = userPortfolioStocks.map((portfolioItem) => {
         const stockInfo = stocksInfo.find(
           (stock) => stock.stock_id === portfolioItem.stock_id
@@ -47,6 +44,23 @@ class portfolioStockService {
     } catch (error) {
       console.error("Error in getUserPortfolioStock:", error.message);
       throw new Error("Failed to fetch user portfolio stocks");
+    }
+  }
+
+  async updatePortfolioStockPrices() {
+    try {
+      const portfolioStocks = await PortfolioStock.findAll();
+
+      for (const portfolioStock of portfolioStocks) {
+        const stock = await stockRepository.getStockById(portfolioStock.stock_id);
+        if (stock) {
+          // 현재가로 포트폴리오 업데이트
+          portfolioStock.current_price = stock.current_price;
+          await portfolioStock.save();
+        }
+      }
+    } catch (error) {
+      console.error("Failed to update portfolio stock prices:", error.message);
     }
   }
 }
