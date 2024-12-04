@@ -1,5 +1,5 @@
 //models/index.js
-import User from "./User.js";
+import User from "./user.js";
 import Portfolio from "./Portfolio.js";
 import School from "./School.js";
 import Ranking from "./Ranking.js";
@@ -9,7 +9,7 @@ import Stock from "./Stock.js";
 import News from "./News.js";
 import NewsRead from "./NewsRead.js";
 import Transaction from "./Transaction.js";
-import Attendance from "./Attendance.js";
+import Attendance from "./attendance.js";
 import RewardHistory from "./RewardHistory.js"; 
 
 // User와 Portfolio (1:1)
