@@ -4,7 +4,6 @@ class StockController {
   async getStockData(req, res) {
     const { stockCode } = req.params;
     const { duration } = req.query;
-
     console.log(
       `Fetching stock data for ${stockCode} with duration: ${duration}`
     );
@@ -71,19 +70,6 @@ class StockController {
       res.json({ data: stockData });
     } catch (error) {
       console.error("Error in getStockData:", error.message);
-      res.status(500).json({ error: error.message });
-    }
-  }
-
-  async getAllStocks(req, res) {
-    try {
-      const stocks = await stockService.getAllStocks();
-      if (!stocks || stocks.length === 0) {
-        return res.status(404).json({ error: "No stocks found" });
-      }
-      res.json({ data: stocks });
-    } catch (error) {
-      console.error("Error in getAllStocks:", error.message);
       res.status(500).json({ error: error.message });
     }
   }

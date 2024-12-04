@@ -21,9 +21,6 @@ class StockService {
       close: item.close,
     }));
   }
-  async getAllStocks() {
-    return await Stock.findAll(); // Sequelize ORM 가정
-  }
 
   formatDate(rawDate) {
     if (typeof rawDate === "string") {

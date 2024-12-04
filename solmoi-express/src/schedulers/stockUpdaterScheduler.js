@@ -2,7 +2,7 @@ import schedule from "node-schedule";
 import stockUpdaterService from "../services/stockUpdaterService.js";
 
 const stockUpdaterScheduler = () => {
-  schedule.scheduleJob("*/1 * * * *", async () => {
+  schedule.scheduleJob("0 0 * * *", async () => {
     try {
       const stockCodes = [
         { code: "005930", name: "삼성전자" },
