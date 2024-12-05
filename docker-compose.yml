@@ -12,6 +12,15 @@ services:
       db:
         condition: service_healthy
     restart: always
+  
+  nginx:
+    image: kimdongjae/solmoi-client
+    container_name: client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - app
 
   db:
     image: mysql:8.0
